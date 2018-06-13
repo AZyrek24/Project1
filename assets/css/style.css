@@ -4,6 +4,9 @@
     left: 30px;
 }
 
+.navbar {
+}
+
 #list-btn {
     font-size: 50px;
     position: absolute;
@@ -12,11 +15,15 @@
 }
 
 #display-field {
-    height: 60px;
+    height: 200px;
+    margin-bottom: 20px;
 }
 
-#buttons-1 {
-    font-size: 40px;
+#buttons-id {
+    font-size: 90px;
+    height: 140px;
+    width: 140px;
+    float: left;
 }
 
 #bottom-bar {
