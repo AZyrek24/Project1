@@ -1,0 +1,11 @@
+#top-bar {
+    font-size: 60px;
+    padding-bottom: 1px;
+}
+
+#list-btn {
+    font-size: 40px;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
