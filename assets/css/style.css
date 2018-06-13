@@ -1,11 +1,24 @@
 #top-bar {
-    font-size: 60px;
-    padding-bottom: 1px;
+    font-size: 58px;
+    height: 75px;
+    left: 30px;
 }
 
 #list-btn {
-    font-size: 40px;
+    font-size: 50px;
     position: absolute;
     right: 30px;
-    top: 30px;
+    top: 10px;
+}
+
+#display-field {
+    height: 60px;
+}
+
+#buttons-1 {
+    font-size: 40px;
+}
+
+#bottom-bar {
+    height: 90px;
 }
