@@ -4,9 +4,6 @@
     left: 30px;
 }
 
-.navbar {
-}
-
 #list-btn {
     font-size: 50px;
     position: absolute;
@@ -15,15 +12,23 @@
 }
 
 #display-field {
-    height: 200px;
+    height: 90px;
     margin-bottom: 20px;
+    padding: 10px;
+    font-size: 50px;
+    text-indent: 10%;
+    font-weight: bold;
 }
+
+
 
 #buttons-id {
     font-size: 90px;
+    font-weight: bold;
     height: 140px;
     width: 140px;
     float: left;
+    margin: 15px;
 }
 
 #bottom-bar {
