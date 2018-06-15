@@ -29,7 +29,9 @@
     font-weight: bold;
     float: left;
     margin: 15px;
-    color: black;
+    color: yellow accent 4;
+    border-radius: 10px;
+    width: 100px;
 }
 
 #bottom-bar {
@@ -42,6 +44,14 @@ body {
     flex-direction: column;
   }
 
-  main {
+main {
     flex: 1 0 auto;
+  }
+
+  #submit-id {
+    font-weight: bold;
+    float: left;
+    margin: 15px;
+    color: black;
+    border-radius: 10px;
   }
