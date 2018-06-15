@@ -1,36 +1,47 @@
 #top-bar {
+    height: 70px;
+}
+
+#app-name {
     font-size: 58px;
-    height: 75px;
-    left: 30px;
+    color: black;
+    font-weight: bolder;
 }
 
 #list-btn {
-    font-size: 50px;
+    font-size: 40px;
     position: absolute;
     right: 30px;
     top: 10px;
+    font-weight: bold;
 }
 
 #display-field {
-    height: 90px;
     margin-bottom: 20px;
-    padding: 10px;
-    font-size: 50px;
+    padding-bottom: 10px;
+    font-size: 65px;
     text-indent: 10%;
     font-weight: bold;
 }
 
-
-
 #buttons-id {
-    font-size: 90px;
+    font-size: 80px;
     font-weight: bold;
-    height: 140px;
-    width: 140px;
     float: left;
     margin: 15px;
+    color: black;
 }
 
 #bottom-bar {
     height: 90px;
 }
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }

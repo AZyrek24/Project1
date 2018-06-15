@@ -7,44 +7,46 @@
   <meta name="description" content="">
 
   <link href="css/reset.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-    <p class="navbar-brand text-dark font-weight-bold" id="top-bar">MyMaterials</a>
-      <button class="btn btn-dark my-sm-0 font-weight-bold text-light" type="submit" id="list-btn">View list</button>
+  <nav>
+    <div class="nav-wrapper yellow accent-4" id="top-bar">
+      <a class="brand-logo left text-darken-2" id="app-name">MyMaterials</a>
+      <ul id="nav-mobile" class="right">
+        <button type="button" class="waves-effect grey darken-4 btn-large" id="list-btn">View list</a>
+      </ul>
+    </div>
   </nav>
-  <div class="bg-dark text-light w-100 p-3" id="display-field"><span id="text-field">2x4x16 pine</span></div>
-  <div class="container">
+
+  <div id="display-field">
     <div class="row">
-        <!--  placeholder button to demonstrate #buttons-id -->
-        <button type="button" class="btn btn-warning" id="buttons-id">1</button>
-        <button type="button" class="btn btn-warning" id="buttons-id">2</button>
-
-
-
-      </div>
-      <div class="col-sm">
-      </div>
-      <div class="col-sm">
-      </div>
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input placeholder="Enter product here" id="product-input" type="text" class="validate">
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
-  <div class="navbar fixed-bottom navbar-light bg-warning" id="bottom-bar">
-    
-     
+  
+  <div class="container" id="buttons-div">
+    <div class="row">
+      <!--  placeholder button to demonstrate #buttons-id -->
+      <button type="button" class="yellow accent-4" id="buttons-id">Lumber</button>
+    </div>
   </div>
 
+  <footer class="page-footer yellow accent-4" id="bottom-bar">
+  </footer>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
   <script src="js/script.js"></script>
 </body>
 
