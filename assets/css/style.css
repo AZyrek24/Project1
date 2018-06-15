@@ -1,0 +1,58 @@
+#buttons-id {
+  font-size: 160px;
+  font-weight: bold;
+  float: left;
+  margin: 40px 10px 50px 40px;
+  color: white;
+  border-radius: 10px;
+  width: 220px;
+}
+#type-buttons-id {
+  font-size: 160px;
+  font-weight: bold;
+  float: left;
+  margin: 65px 10px 50px 180px;
+  color: white;
+  border-radius: 10px;
+  width: 440px;
+}
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+/* #list-button-id {
+  font-size: 180px;
+  font-weight: bold;
+  float: left;
+  margin: 15px;
+  color: yellow accent 4;
+  border-radius: 10px;
+  width: 800px;
+  margin-left: 25px;
+
+} */
+#data-input {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  height: 200px;
+  background: black;
+  color: white;
+}
+/* #top-bar {
+  height: 140px;
+} */
+#bottom-bar {
+  height: 180px;
+}
+#display-field {
+  
+  background: black;
+  font-size: 100px;
+  color: white;
+}
+
