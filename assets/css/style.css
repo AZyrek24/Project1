@@ -1,41 +1,48 @@
 #top-bar {
-    height: 70px;
+    height: 150px;
 }
 
 #app-name {
-    font-size: 58px;
+    font-size: 98px;
     color: black;
     font-weight: bolder;
+    padding-top: 30px;
 }
 
 #list-btn {
-    font-size: 40px;
+    font-size: 50px;
     position: absolute;
     right: 30px;
     top: 10px;
     font-weight: bold;
+    height:120px;
 }
 
 #display-field {
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    height: 100px;
+    background-color: black;
     font-size: 65px;
     text-indent: 10%;
     font-weight: bold;
 }
 
-#buttons-id {
-    font-size: 80px;
+#number-buttons-id {
+    font-size: 180px;
     font-weight: bold;
     float: left;
     margin: 15px;
     color: yellow accent 4;
     border-radius: 10px;
-    width: 100px;
+    width: 220px;
+}
+
+#materials-buttons-id {
+    width: 800px;
+    font-size: 180px;
 }
 
 #bottom-bar {
-    height: 90px;
+    height: 180px;
 }
 
 body {
