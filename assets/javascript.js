@@ -44,13 +44,13 @@ $(document).ready(function () {
     var dimArray = lumber.board.dimension;
     for (var i = 0; i < dimArray.length; i++) {
       if (i === 9) {
-        buttonDiv.append('<button type="button" class="white-text text-accent-4 green" id="buttons-id" value=' + dimArray[i] + '>' + dimArray[i] + '<i class="fa fa-home"></i></button>');
+        buttonDiv.append('<button type="button" class="white-text text-accent-4 green dimension-buttons" value=' + dimArray[i] + '>' + dimArray[i] + '<i class="fa fa-home"></i></button>');
       }
       else if (i === 11) {
-        buttonDiv.append('<button type="button" class="white-text text-accent-4 green" id="buttons-id" value=' + dimArray[i] + '>' + dimArray[i] + '<i class="fa fa-arrow-left"></i></button>');
+        buttonDiv.append('<button type="button" class="white-text text-accent-4 green dimension-buttons" value=' + dimArray[i] + '>' + dimArray[i] + '<i class="fa fa-arrow-left"></i></button>');
       }
       else {
-        buttonDiv.append('<button type="button" class="white-text text-accent-4 black" id="buttons-id" value=' + dimArray[i] + '>' + dimArray[i] + '</button>');
+        buttonDiv.append('<button type="button" class="white-text text-accent-4 black dimension-buttons" value=' + dimArray[i] + '>' + dimArray[i] + '</button>');
       }
     }
   }
@@ -62,24 +62,33 @@ $(document).ready(function () {
     buttonDiv.empty();
     var typeArray = lumber.board.type;
     for (var i = 0; i < typeArray.length; i++) {
-      buttonDiv.append('<button type="button" class="white-text text-accent-4 black" id="type-buttons-id" value=' + typeArray[i] + '>' + typeArray[i] + '</button>');
+      buttonDiv.append('<button type="button" class="white-text text-accent-4 black type-buttons" value=' + typeArray[i] + '>' + typeArray[i] + '</button>');
     }
   }
   //Creates a quantity field with + and - buttons
   function getQuantityButtons() {
     buttonDiv.empty();
-    buttonDiv.append('<div class="row" id="qtySpacer"></div>');
-    buttonDiv.append('<div class="row">')
-    buttonDiv.append('<div class="col s4" id="qty-spacer-left"></div>')
-    buttonDiv.append('<div class="col s4" id="qty-container"></div>')
-    $("#qty-container").append('<a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">+</i></a>');
-    $("#qty-container").append('<br><a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">-</i></a>');
-    buttonDiv.append('<div class="col s4" id="qty-spacer-right"></div>')
+    buttonDiv.append('<div class="row spacer"></div>');
+    buttonDiv.append('<div class="row spacer" id="qty-row"></div>');
+
+    var spacerDiv = $("#qty-row");
+
+    spacerDiv.append('<div class="col s6" id="qty-left"></div>');
+    var quantityDiv = $("#qty-left");
+    quantityDiv.html('<form><input type="text" placeholder="Qty></form>');
+
+
+    spacerDiv.append('<div class="col s6" id="qty-right"></div>');
+
+    var containerDiv = $("#qty-right");
+
+    containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="plus">+</button>');
+    containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="minus">-</button>');
   }
 
   //Clicking these buttons updates the display with dimensions, then calls the type buttons after three 
   //dimensions are entered
-  $("body").on("click", "#buttons-id", function () {
+  $("body").on("click", ".dimension-buttons", function () {
     if (counter < 2) {
       var buttonValue = $(this).attr("value");
       dataInput.append(buttonValue + " x ");
@@ -94,7 +103,7 @@ $(document).ready(function () {
   });
 
   //Clicking a 'type' button updates the display with lumber type, then calls the quantity button 
-  $("body").on("click", "#type-buttons-id", function () {
+  $("body").on("click", ".type-buttons", function () {
     if (counter < 4) {
       var buttonValue = $(this).attr("value");
       dataInput.append(buttonValue + " = ");

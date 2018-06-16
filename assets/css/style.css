@@ -1,4 +1,4 @@
-#buttons-id {
+.dimension-buttons {
   font-size: 160px;
   font-weight: bold;
   float: left;
@@ -7,7 +7,7 @@
   border-radius: 40px;
   width: 220px;
 }
-#type-buttons-id {
+.type-buttons {
   font-size: 160px;
   font-weight: bold;
   float: left;
@@ -40,8 +40,8 @@ nav {
   margin-left: 25px;
 
 } */
-#spacer {
-  height: 60px;
+.spacer {
+  height: 260px;
 }
 #data-input {
   padding-top: 40px;
@@ -62,19 +62,21 @@ nav {
   font-size: 100px;
   color: white;
 }
-#qtySpacer {
-  height: 300px;
+#qty-row {
+  height: 600px;
 }
-#qty-spacer-left,
-#qty-spacer-right {
-  height: 300px;
-  width: 33%;
+#qty-left,
+#qty-right {
   margin: 0;
 }
-#qty-container {
-  height: 300px;
-  width: 34%;
-  margin: 0;
+#plus,
+#minus {
+  width: 220px;
+
+}
+#qty-input {
+  width: 400px;
+  height: 400px;
 }
 
 
