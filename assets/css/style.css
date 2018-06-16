@@ -1,0 +1,73 @@
+.dimension-buttons {
+  font-size: 160px;
+  font-weight: bold;
+  float: left;
+  margin: 40px 10px 50px 40px;
+  color: white;
+  border-radius: 40px;
+  width: 220px;
+}
+.type-buttons {
+  font-size: 160px;
+  font-weight: bold;
+  float: left;
+  margin: 65px 10px 50px 180px;
+  color: white;
+  border-radius: 10px;
+  width: 440px;
+}
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background: rgb(236,236,236);
+}
+
+main {
+  flex: 1 0 auto;
+}
+nav {
+  height: 180px;
+}
+
+.spacer {
+  height: 260px;
+}
+#data-input {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  height: 170px;
+  background: black;
+  color: white;
+}
+/* #top-bar {
+  height: 140px;
+} */
+#bottom-bar {
+  height: 120px;
+}
+#display-field {
+  
+  background: black;
+  font-size: 100px;
+  color: white;
+}
+#qty-row {
+  height: 600px;
+}
+#qty-left,
+#qty-right {
+  margin: 0;
+}
+#plus,
+#minus {
+  width: 220px;
+
+}
+#qty-input {
+  width: 400px;
+  height: 400px;
+}
+
+
+
