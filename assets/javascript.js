@@ -1,9 +1,18 @@
 $(document).ready(function () {
+  //Global Variables and Arrays
   var lumber = {
-    dimension: ["1", "2", "3", "4", "6", "8", "10", "12", "16", "Bk", "20", "Dl"],
-    type: ["Pine", "Oak", "Rdwd", "Trtd"]
+    board: {
+      dimension: ["1", "2", "3", "4", "6", "8", "10", "12", "16", "", "20", ""],
+      type: ["Fir", "Oak", "Cdr", "Rdwd"]
+    },
+    plywood: {
+      dimension: ["1", "2", "3", "4", "5", "6", "8", "", "/", ""],
+      type: ["Pine", "Oak", "Rdwd", "Birch", "OSB", "MDF"]
+    }
   };
-  dimensionCounter = 0;
+  var counter = 0;
+  var list = [];
+  
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyAVx25kRGgziJgC49KkZybS8Ho6jkvOVDo",
@@ -15,79 +24,94 @@ $(document).ready(function () {
   };
   firebase.initializeApp(config);
 
-  //Stores text into firebase
+  // //Stores text into firebase
   // var database = firebase.database();
 
-  // var material = "";
-  // var dimension = "";
-  // var type = "";
-  // var qty = 0;
-
-
-
-  // material = "lumber";
-  // dimension = "2x4x8";
-  // type = "pine";
-  // qty = 12;
-
-  // $("body").on("click", "button", function (event) {
+  // $("body").on("click", "#add", function (event) {
   //   event.preventDefault();
   //   material = $("#product-input").val().trim();
   //   alert(material);
   //   database.ref().set({
-  //     material: material
+  //     list: list
   //   });
   // })
+
+  
+  //Stores recurring JQuery to variable
+  var buttonDiv = $("#buttons-div");
+  //Creates buttons to enter dimensions of lumber, a home button, and a back button
   function getDimensionButtons() {
-    for (var i = 0; i < lumber.dimension.length; i++) {
+    var dimArray = lumber.board.dimension;
+    for (var i = 0; i < dimArray.length; i++) {
       if (i === 9) {
-        $("#buttons-div").append('<button type="button" class="white-text text-accent-4 green" id="buttons-id" value=' + lumber.dimension[i] + '>' + lumber.dimension[i] + '</button>');
+        buttonDiv.append('<button type="button" class="white-text text-accent-4 green" id="buttons-id" value=' + dimArray[i] + '>' + dimArray[i] + '<i class="fa fa-home"></i></button>');
       }
       else if (i === 11) {
-        $("#buttons-div").append('<button type="button" class="white-text text-accent-4 green" id="buttons-id" value=' + lumber.dimension[i] + '>' + lumber.dimension[i] + '</button>');
+        buttonDiv.append('<button type="button" class="white-text text-accent-4 green" id="buttons-id" value=' + dimArray[i] + '>' + dimArray[i] + '<i class="fa fa-arrow-left"></i></button>');
       }
       else {
-        $("#buttons-div").append('<button type="button" class="white-text text-accent-4 black" id="buttons-id" value=' + lumber.dimension[i] + '>' + lumber.dimension[i] + '</button>');
+        buttonDiv.append('<button type="button" class="white-text text-accent-4 black" id="buttons-id" value=' + dimArray[i] + '>' + dimArray[i] + '</button>');
       }
     }
   }
+  //Stores recurring JQuery to variable
+  var dataInput = $("#data-input");
+
+  //Creates buttons to enter wood type
   function getTypeButtons() {
-    $("#buttons-div").empty();
-    for (var i = 0; i < lumber.type.length; i++) {
-      $("#buttons-div").append('<button type="button" class="white-text text-accent-4 black" id="type-buttons-id" value=' + lumber.type[i] + '>' + lumber.type[i] + '</button>');
+    buttonDiv.empty();
+    var typeArray = lumber.board.type;
+    for (var i = 0; i < typeArray.length; i++) {
+      buttonDiv.append('<button type="button" class="white-text text-accent-4 black" id="type-buttons-id" value=' + typeArray[i] + '>' + typeArray[i] + '</button>');
     }
   }
+  //Creates a quantity field with + and - buttons
   function getQuantityButtons() {
-    $("#buttons-div").empty();
-    $("#buttons-div").append();
+    buttonDiv.empty();
+    buttonDiv.append('<div class="row" id="qtySpacer"></div>');
+    buttonDiv.append('<div class="row">')
+    buttonDiv.append('<div class="col s4" id="qty-spacer-left"></div>')
+    buttonDiv.append('<div class="col s4" id="qty-container"></div>')
+    $("#qty-container").append('<a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">+</i></a>');
+    $("#qty-container").append('<br><a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">-</i></a>');
+    buttonDiv.append('<div class="col s4" id="qty-spacer-right"></div>')
   }
 
-
+  //Clicking these buttons updates the display with dimensions, then calls the type buttons after three 
+  //dimensions are entered
   $("body").on("click", "#buttons-id", function () {
-    if (dimensionCounter < 2) {
+    if (counter < 2) {
       var buttonValue = $(this).attr("value");
-      $("#data-input").append(buttonValue + " x ");
-      dimensionCounter++;
+      dataInput.append(buttonValue + " x ");
+      counter++;
     }
-    else if (dimensionCounter < 3) {
+    else if (counter < 3) {
       var buttonValue = $(this).attr("value");
-      $("#data-input").append(buttonValue + " ");
-      dimensionCounter++;
+      dataInput.append(buttonValue + " ");
+      counter++;
       getTypeButtons();
     }
   });
 
+  //Clicking a 'type' button updates the display with lumber type, then calls the quantity button 
   $("body").on("click", "#type-buttons-id", function () {
-    if (dimensionCounter < 4) {
+    if (counter < 4) {
       var buttonValue = $(this).attr("value");
-      $("#data-input").append(buttonValue + " = ");
-      dimensionCounter++;
+      dataInput.append(buttonValue + " = ");
+      counter++;
       getQuantityButtons();
     }
   });
 
+  //Clicking the 'add' button updates the list array, updates Firebase database
+  $("body").on("click", "#add-button-id", function () {
+    if (counter < 5) {
+      var buttonValue = $(this).attr("value");
+      dataInput.append(buttonValue + " = ");
+      counter++;
+    }
+  });
 
-
+  //Main Process
   getDimensionButtons();
 });
-//Main Process
