@@ -1,3 +1,21 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background: rgb(236,236,236);
+}
+container {
+  margin: none;
+  width: 100%;
+}
+
+main {
+  flex: 1 0 auto;
+}
+nav {
+  height: 80px;
+}
+
 .dimension-buttons {
   font-size: 160px;
   font-weight: bold;
@@ -16,39 +34,44 @@
   border-radius: 10px;
   width: 440px;
 }
-body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-  background: rgb(236,236,236);
-}
-
-main {
-  flex: 1 0 auto;
-}
-nav {
-  height: 180px;
-}
-
 .spacer {
   height: 260px;
 }
+#display-field {  
+  background: black;
+  font-size: 40px;
+  color: white;
+}
 #data-input {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  height: 170px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: 80px;
   background: black;
   color: white;
+}
+#list-btn{
+  height: 50px;
+  width: 50px;
+  margin: 5px 15px 10px 0px;
+  border-radius: 4px;
+}
+#icon-size{
+  font-size: 38px;
+}
+#app-name{
+  font-size: 36px;
+  color: black;
+  margin-left: 4px;
+  margin-top: 0px;
+  font-weight: bolder;
 }
 
 #bottom-bar {
-  height: 120px;
+  height: 60px;
 }
-#display-field {
-  
-  background: black;
-  font-size: 100px;
-  color: white;
+#map {
+  margin-top: 20px;
+  border: 4px solid rgb(254,213,49);
 }
 #qty-row {
   height: 600px;

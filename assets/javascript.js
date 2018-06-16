@@ -14,6 +14,7 @@ $(document).ready(function () {
   var counter = 0;
   var listItem = "";
   var list = ["2x4x8 Oak = 12", "2x6x12 Pine = 10"];
+  var qty = 0;
   var latitude = 0;
   var longitude = 0;
 
@@ -101,7 +102,7 @@ $(document).ready(function () {
   }
   function getMap() {
     buttonDiv.empty();
-    buttonDiv.append('<div id="map" style="width: 100%; height: 600px;"></div>');
+    buttonDiv.append('<div class="yellow accent-4" id="map" style="width: 100%; height: 240px;"></div>');
     console.log(latitude);
     console.log(longitude);
 
@@ -117,6 +118,22 @@ $(document).ready(function () {
       map.addControl(L.mapquest.control());
     
   }
+  // function getWeather () {
+  //   var key = "e761708ff347e5ade239aba2255bcee5"
+  //   var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
+  //     "q=Bujumbura,Burundi&units=imperial&appid=" + key;
+  //     $.ajax({
+  //       url: queryURL,
+  //       method: "GET"
+  //     })
+  //       .then(function(response) {
+  //         console.log(queryURL);
+  //         console.log(response);
+  
+  //         // Transfer content to HTML
+  //         $(buttonDiv).html("<h1>" + response.name + " Weather Details</h1>");
+  
+  // }
 
 
   //Click Events
@@ -156,6 +173,7 @@ $(document).ready(function () {
   //Clicking the 'add' button updates the list array, updates Firebase database
   $("body").on("click", "#add-button-id", function (event) {
     event.preventDefault();
+    listItem = listItem + qty;
     list.push(listItem);
     database.ref().set({
       list: list
@@ -170,8 +188,7 @@ $(document).ready(function () {
   $("body").on("click", "#list-btn", function (event) {
 
   })
-
-
+  
 
 
   //Main Process
