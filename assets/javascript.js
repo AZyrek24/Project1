@@ -1,5 +1,6 @@
 $(document).ready(function () {
   //Global Variables and Arrays
+  //===============================================================================================================
   var lumber = {
     board: {
       dimension: ["1", "2", "3", "4", "6", "8", "10", "12", "16", "", "20", ""],
@@ -11,9 +12,11 @@ $(document).ready(function () {
     }
   };
   var counter = 0;
-  var list = [];
+  var listItem = "";
+  var list = ["2x4x8 Oak = 12", "2x6x12 Pine = 10"];
   
   // Initialize Firebase
+  //===============================================================================================================
   var config = {
     apiKey: "AIzaSyAVx25kRGgziJgC49KkZybS8Ho6jkvOVDo",
     authDomain: "project1-1528576226463.firebaseapp.com",
@@ -24,21 +27,12 @@ $(document).ready(function () {
   };
   firebase.initializeApp(config);
 
-  // //Stores text into firebase
-  // var database = firebase.database();
+  //Functions
+  //==============================================================================================================
 
-  // $("body").on("click", "#add", function (event) {
-  //   event.preventDefault();
-  //   material = $("#product-input").val().trim();
-  //   alert(material);
-  //   database.ref().set({
-  //     list: list
-  //   });
-  // })
-
-  
   //Stores recurring JQuery to variable
   var buttonDiv = $("#buttons-div");
+
   //Creates buttons to enter dimensions of lumber, a home button, and a back button
   function getDimensionButtons() {
     var dimArray = lumber.board.dimension;
@@ -75,7 +69,7 @@ $(document).ready(function () {
 
     spacerDiv.append('<div class="col s6" id="qty-left"></div>');
     var quantityDiv = $("#qty-left");
-    quantityDiv.html('<form><input type="text" placeholder="Qty></form>');
+    quantityDiv.html('<form id="qty-input"><input type="text" placeholder="Qty></form>');
 
 
     spacerDiv.append('<div class="col s6" id="qty-right"></div>');
@@ -86,20 +80,26 @@ $(document).ready(function () {
     containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="minus">-</button>');
   }
 
+  //Click Events
+  //==============================================================================================================
+
   //Clicking these buttons updates the display with dimensions, then calls the type buttons after three 
   //dimensions are entered
   $("body").on("click", ".dimension-buttons", function () {
     if (counter < 2) {
       var buttonValue = $(this).attr("value");
       dataInput.append(buttonValue + " x ");
+      listItem = listItem + buttonValue + " x ";
       counter++;
     }
     else if (counter < 3) {
       var buttonValue = $(this).attr("value");
       dataInput.append(buttonValue + " ");
+      listItem = listItem + buttonValue + " ";
       counter++;
       getTypeButtons();
     }
+    console.log(listItem);
   });
 
   //Clicking a 'type' button updates the display with lumber type, then calls the quantity button 
@@ -107,20 +107,32 @@ $(document).ready(function () {
     if (counter < 4) {
       var buttonValue = $(this).attr("value");
       dataInput.append(buttonValue + " = ");
+      listItem = listItem + buttonValue + " = ";
       counter++;
       getQuantityButtons();
     }
+    console.log(listItem);
   });
 
   //Clicking the 'add' button updates the list array, updates Firebase database
-  $("body").on("click", "#add-button-id", function () {
-    if (counter < 5) {
-      var buttonValue = $(this).attr("value");
-      dataInput.append(buttonValue + " = ");
-      counter++;
-    }
+  $("body").on("click", "#add-button-id", function (event) {
+    event.preventDefault();
+    list.push(listItem);
+    database.ref().set({
+      list: list
+    });
+
   });
 
+  //Firebase.database() trigger stored to var database
+  var database = firebase.database();
+
+  //Clicking the 'list' button retreives firebase.database list and displays as a list
+  $("body").on("click", "#list-btn", function (event) {
+    
+  })
+
   //Main Process
+  //==============================================================================================================
   getDimensionButtons();
 });
