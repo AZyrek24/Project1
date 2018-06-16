@@ -4,7 +4,7 @@ $(document).ready(function () {
   var lumber = {
     board: {
       dimension: ["1", "2", "3", "4", "6", "8", "10", "12", "16", "", "20", ""],
-      type: ["Fir", "Oak", "Cdr", "Rdwd"]
+      type: ["Fir", "Oak", "Cdr", "Rdwd", "Trtd"]
     },
     plywood: {
       dimension: ["1", "2", "3", "4", "5", "6", "8", "", "/", ""],
@@ -14,7 +14,9 @@ $(document).ready(function () {
   var counter = 0;
   var listItem = "";
   var list = ["2x4x8 Oak = 12", "2x6x12 Pine = 10"];
-  
+  var latitude = 0;
+  var longitude = 0;
+
   // Initialize Firebase
   //===============================================================================================================
   var config = {
@@ -79,6 +81,43 @@ $(document).ready(function () {
     containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="plus">+</button>');
     containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="minus">-</button>');
   }
+  function geoFindMe() {
+    var output = document.getElementById("out");
+
+    if (!navigator.geolocation) {
+      output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+      return;
+    }
+
+    function success(position) {
+      console.log(position)
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+      getMap();
+    }
+
+    navigator.geolocation.getCurrentPosition(success);
+
+  }
+  function getMap() {
+    buttonDiv.empty();
+    buttonDiv.append('<div id="map" style="width: 100%; height: 600px;"></div>');
+    console.log(latitude);
+    console.log(longitude);
+
+      L.mapquest.key = 'lYrP4vF3Uk5zgTiGGuEzQGwGIVDGuy24';
+
+      var map = L.mapquest.map('map', {
+
+        center: [latitude, longitude],
+        layers: L.mapquest.tileLayer('map'),
+        zoom: 12
+      });
+
+      map.addControl(L.mapquest.control());
+    
+  }
+
 
   //Click Events
   //==============================================================================================================
@@ -129,10 +168,15 @@ $(document).ready(function () {
 
   //Clicking the 'list' button retreives firebase.database list and displays as a list
   $("body").on("click", "#list-btn", function (event) {
-    
+
   })
+
+
+
 
   //Main Process
   //==============================================================================================================
-  getDimensionButtons();
+  geoFindMe();
+
+  // getDimensionButtons();
 });
