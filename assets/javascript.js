@@ -1,24 +1,29 @@
 $(document).ready(function () {
-  //Global Variables and Arrays
+  //GLOBAL VARIABLES AND ARRAYS ***********************************************************************************
   //===============================================================================================================
   var lumber = {
     board: {
       dimension: ["1", "2", "3", "4", "6", "8", "10", "12", "16", "", "20", ""],
-      type: ["Fir", "Oak", "Cdr", "Rdwd", "Trtd"]
+      type: ["Fir", "Pine", "Oak", "Cdr", "Rdwd", "Trtd"]
     },
     plywood: {
       dimension: ["1", "2", "3", "4", "5", "6", "8", "", "/", ""],
       type: ["Pine", "Oak", "Rdwd", "Birch", "OSB", "MDF"]
     }
   };
+  var categoryArray = ["Lumber", "Plumbing", "Electrical", "Hardware"];
+  var lumberSubCategoryArray = ["Board", "Plywood"];
+  var category = "";
+  var subCategory;
+  var dimArray;
   var counter = 0;
   var listItem = "";
-  var list = ["2x4x8 Oak = 12", "2x6x12 Pine = 10"];
+  var list = [];
   var qty = 0;
   var latitude = 0;
   var longitude = 0;
 
-  // Initialize Firebase
+  // Initialize Firebase ******************************************************************************************
   //===============================================================================================================
   var config = {
     apiKey: "AIzaSyAVx25kRGgziJgC49KkZybS8Ho6jkvOVDo",
@@ -30,21 +35,37 @@ $(document).ready(function () {
   };
   firebase.initializeApp(config);
 
-  //Functions
+  //FUNCTIONS ****************************************************************************************************
   //==============================================================================================================
 
   //Stores recurring JQuery to variable
   var buttonDiv = $("#buttons-div");
 
+  //Upon loading page, a button creates the lumber category for building a list
+  function getCategoryButton() {
+    buttonDiv.append('<h1 id="category-choice">Pick a category...</h1>');
+    for (var i = 0; i < categoryArray.length; i++) {
+      buttonDiv.append('<button type="button" class="white-text text-accent-4 black category-buttons" value=' + categoryArray[i] + '>' + categoryArray[i] + '</button>');
+    }
+  }
+  //Creates buttons to select sub-category of selected category
+  function getSubCategoryButtons(category) {
+    buttonDiv.empty();
+    buttonDiv.append('<h1 id="category-choice">What kind of ' + category + ' ?</h1>');
+    for (var i = 0; i < subCategory.length; i++) {
+      buttonDiv.append('<button type="button" class="white-text text-accent-4 black sub-category-buttons" value=' + subCategory[i] + '>' + subCategory[i] + '</button>')
+    }
+  }
+
   //Creates buttons to enter dimensions of lumber, a home button, and a back button
   function getDimensionButtons() {
-    var dimArray = lumber.board.dimension;
+    buttonDiv.empty();
     for (var i = 0; i < dimArray.length; i++) {
       if (i === 9) {
-        buttonDiv.append('<button type="button" class="white-text text-accent-4 green dimension-buttons" value=' + dimArray[i] + '>' + dimArray[i] + '<i class="fa fa-home"></i></button>');
+        buttonDiv.append('<button type="button" class="white-text text-accent-4 green dimension-buttons"><i class="fa fa-home"></i></button>');
       }
       else if (i === 11) {
-        buttonDiv.append('<button type="button" class="white-text text-accent-4 green dimension-buttons" value=' + dimArray[i] + '>' + dimArray[i] + '<i class="fa fa-arrow-left"></i></button>');
+        buttonDiv.append('<button type="button" class="white-text text-accent-4 green dimension-buttons"><i class="fa fa-arrow-left"></i></button>');
       }
       else {
         buttonDiv.append('<button type="button" class="white-text text-accent-4 black dimension-buttons" value=' + dimArray[i] + '>' + dimArray[i] + '</button>');
@@ -101,22 +122,22 @@ $(document).ready(function () {
 
   }
   function getMap() {
-    buttonDiv.empty();
-    buttonDiv.append('<div class="yellow accent-4" id="map" style="width: 100%; height: 240px;"></div>');
+    $("#display-field").empty();
+    $("#display-field").append('<div class="yellow accent-4" id="map" style="width: 100%; height: 740px;"></div>');
     console.log(latitude);
     console.log(longitude);
 
-      L.mapquest.key = 'lYrP4vF3Uk5zgTiGGuEzQGwGIVDGuy24';
+    L.mapquest.key = 'lYrP4vF3Uk5zgTiGGuEzQGwGIVDGuy24';
 
-      var map = L.mapquest.map('map', {
+    var map = L.mapquest.map('map', {
 
-        center: [latitude, longitude],
-        layers: L.mapquest.tileLayer('map'),
-        zoom: 12
-      });
+      center: [latitude, longitude],
+      layers: L.mapquest.tileLayer('map'),
+      zoom: 12
+    });
 
-      map.addControl(L.mapquest.control());
-    
+    map.addControl(L.mapquest.control());
+
   }
   // function getWeather () {
   //   var key = "e761708ff347e5ade239aba2255bcee5"
@@ -129,16 +150,34 @@ $(document).ready(function () {
   //       .then(function(response) {
   //         console.log(queryURL);
   //         console.log(response);
-  
+
   //         // Transfer content to HTML
   //         $(buttonDiv).html("<h1>" + response.name + " Weather Details</h1>");
-  
+
   // }
 
 
-  //Click Events
+  //CLICK EVENTS *************************************************************************************************
   //==============================================================================================================
 
+  //Clicking a category button displays the proper subcategory buttons
+  $("body").on("click", ".category-buttons", function () {
+      category = $(this).attr("value").toLowerCase();
+      if (category === "lumber") {
+        subCategory = lumberSubCategoryArray;
+      }
+      getSubCategoryButtons(category);
+  })
+  $("body").on("click", ".sub-category-buttons", function () {
+      pickedSubCategory = $(this).attr("value").toLowerCase();
+      if (pickedSubCategory === "board") {
+        dimArray = lumber.board.dimension;
+      }
+      else if (pickedSubCategory === "plywood") {
+        dimArray = lumber.plywood.dimension;
+      }
+      getDimensionButtons();
+  })
   //Clicking these buttons updates the display with dimensions, then calls the type buttons after three 
   //dimensions are entered
   $("body").on("click", ".dimension-buttons", function () {
@@ -148,7 +187,7 @@ $(document).ready(function () {
       listItem = listItem + buttonValue + " x ";
       counter++;
     }
-    else if (counter < 3) {
+    else if (counter < 4) {
       var buttonValue = $(this).attr("value");
       dataInput.append(buttonValue + " ");
       listItem = listItem + buttonValue + " ";
@@ -160,7 +199,7 @@ $(document).ready(function () {
 
   //Clicking a 'type' button updates the display with lumber type, then calls the quantity button 
   $("body").on("click", ".type-buttons", function () {
-    if (counter < 4) {
+    if (counter < 5) {
       var buttonValue = $(this).attr("value");
       dataInput.append(buttonValue + " = ");
       listItem = listItem + buttonValue + " = ";
@@ -181,19 +220,23 @@ $(document).ready(function () {
 
   });
 
+  //Clicking the 'location' button call functions to display map and weather data
+  $("#location-btn").on("click", function () {
+    geoFindMe();
+  })
   //Firebase.database() trigger stored to var database
   var database = firebase.database();
 
+
   //Clicking the 'list' button retreives firebase.database list and displays as a list
-  $("body").on("click", "#list-btn", function (event) {
+  // $("body").on("click", "#list-btn", function (event) {
 
-  })
-  
+  // })
 
 
-  //Main Process
+
+  //MAIN PROCESS *************************************************************************************************
   //==============================================================================================================
-  geoFindMe();
-
-  // getDimensionButtons();
+  // geoFindMe();
+  getCategoryButton();
 });

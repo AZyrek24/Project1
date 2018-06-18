@@ -5,7 +5,7 @@ body {
   background: rgb(236,236,236);
 }
 container {
-  margin: none;
+  margin: 0;
   width: 100%;
 }
 
@@ -15,7 +15,16 @@ main {
 nav {
   height: 80px;
 }
-
+.category-buttons,
+.sub-category-buttons {
+  font-size: 160px;
+  font-weight: bold;
+  float: left;
+  margin: 65px 10px 50px 65px;
+  color: white;
+  border-radius: 40px;
+  width: 720px;
+}
 .dimension-buttons {
   font-size: 160px;
   font-weight: bold;
@@ -49,7 +58,8 @@ nav {
   background: black;
   color: white;
 }
-#list-btn{
+#list-btn,
+#location-btn {
   height: 50px;
   width: 50px;
   margin: 5px 15px 10px 0px;
@@ -65,12 +75,17 @@ nav {
   margin-top: 0px;
   font-weight: bolder;
 }
+#category-choice {
+  font-size: 65px;
+  background: rgb(236,236,236); 
+  color: darkgray;
+}
 
 #bottom-bar {
   height: 60px;
 }
 #map {
-  margin-top: 20px;
+  margin-top: 80px;
   border: 4px solid rgb(254,213,49);
 }
 #qty-row {
