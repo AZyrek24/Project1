@@ -3,11 +3,11 @@ $(document).ready(function () {
   //===============================================================================================================
   var lumber = {
     board: {
-      dimension: ["1", "2", "3", "4", "6", "8", "10", "12", "16", "", "20", ""],
+      dimension: ["1", "2", "3", "4", "6", "8", "10", "12", "16", "home", "20", "del"],
       type: ["Fir", "Pine", "Oak", "Cdr", "Rdwd", "Trtd"]
     },
     plywood: {
-      dimension: ["1", "2", "3", "4", "5", "6", "8", "", "/", ""],
+      dimension: ["1", "2", "3", "4", "5", "8", "home", "&#47", "del"],
       type: ["Pine", "Oak", "Rdwd", "Birch", "OSB", "MDF"]
     }
   };
@@ -43,6 +43,7 @@ $(document).ready(function () {
 
   //Upon loading page, a button creates the lumber category for building a list
   function getCategoryButton() {
+
     buttonDiv.append('<h1 id="category-choice">Pick a category...</h1>');
     for (var i = 0; i < categoryArray.length; i++) {
       buttonDiv.append('<button type="button" class="white-text text-accent-4 black category-buttons" value=' + categoryArray[i] + '>' + categoryArray[i] + '</button>');
@@ -57,14 +58,18 @@ $(document).ready(function () {
     }
   }
 
+  //Stores recurring JQuery to variable
+  var displayField = $("#display-field");
+
   //Creates buttons to enter dimensions of lumber, a home button, and a back button
   function getDimensionButtons() {
+    displayField.show();
     buttonDiv.empty();
     for (var i = 0; i < dimArray.length; i++) {
-      if (i === 9) {
+      if (dimArray[i] === "home") {
         buttonDiv.append('<button type="button" class="white-text text-accent-4 green dimension-buttons"><i class="fa fa-home"></i></button>');
       }
-      else if (i === 11) {
+      else if (dimArray[i] === "del") {
         buttonDiv.append('<button type="button" class="white-text text-accent-4 green dimension-buttons"><i class="fa fa-arrow-left"></i></button>');
       }
       else {
@@ -84,25 +89,27 @@ $(document).ready(function () {
     }
   }
   //Creates a quantity field with + and - buttons
-  function getQuantityButtons() {
-    buttonDiv.empty();
-    buttonDiv.append('<div class="row spacer"></div>');
-    buttonDiv.append('<div class="row spacer" id="qty-row"></div>');
+  // function getQuantityButtons() {
+  //   buttonDiv.empty();
+  //   buttonDiv.append('<div class="row spacer"></div>');
+  //   buttonDiv.append('<div class="row spacer" id="qty-row"></div>');
 
-    var spacerDiv = $("#qty-row");
+  //   var spacerDiv = $("#qty-row");
 
-    spacerDiv.append('<div class="col s6" id="qty-left"></div>');
-    var quantityDiv = $("#qty-left");
-    quantityDiv.html('<form id="qty-input"><input type="text" placeholder="Qty></form>');
+  //   spacerDiv.append('<div class="col s6" id="qty-left"></div>');
+  //   var quantityDiv = $("#qty-left");
+  //   quantityDiv.html('<form id="qty-input"><input type="text" placeholder="Qty></form>');
 
 
-    spacerDiv.append('<div class="col s6" id="qty-right"></div>');
+  //   spacerDiv.append('<div class="col s6" id="qty-right"></div>');
 
-    var containerDiv = $("#qty-right");
+  //   var containerDiv = $("#qty-right");
 
-    containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="plus">+</button>');
-    containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="minus">-</button>');
-  }
+  //   containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="plus">+</button>');
+  //   containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="minus">-</button>');
+  // }
+
+  //Determines geo coordinates of current location
   function geoFindMe() {
     var output = document.getElementById("out");
 
@@ -121,9 +128,12 @@ $(document).ready(function () {
     navigator.geolocation.getCurrentPosition(success);
 
   }
+
+  //Calls MapQuest API and displays a map of current location, calls weather function
   function getMap() {
-    $("#display-field").empty();
-    $("#display-field").append('<div class="yellow accent-4" id="map" style="width: 100%; height: 740px;"></div>');
+    displayField.hide();
+    buttonDiv.empty();
+    buttonDiv.append('<div class="yellow accent-4" id="map" style="width: 100%; height: 600px;"></div>');
     console.log(latitude);
     console.log(longitude);
 
@@ -137,46 +147,64 @@ $(document).ready(function () {
     });
 
     map.addControl(L.mapquest.control());
-
+    getWeather();
   }
-  // function getWeather () {
-  //   var key = "e761708ff347e5ade239aba2255bcee5"
-  //   var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
-  //     "q=Bujumbura,Burundi&units=imperial&appid=" + key;
-  //     $.ajax({
-  //       url: queryURL,
-  //       method: "GET"
-  //     })
-  //       .then(function(response) {
-  //         console.log(queryURL);
-  //         console.log(response);
 
-  //         // Transfer content to HTML
-  //         $(buttonDiv).html("<h1>" + response.name + " Weather Details</h1>");
+  //AJAX call to OpenWeather API, displays current temp and 5-day forecast
+  function getWeather() {
+    var key = "3c552e669646dac238724b88757b323c"
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + key;
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    })
+      .then(function (response) {
+        console.log(queryURL);
+        console.log(response);
 
-  // }
+        // Transfer content to HTML
+        var icon = ("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png' alt='Icon depicting current weather.'>");
+        $(buttonDiv).append("<h1>Current Temp: " + response.main.temp + icon + "</h1>");
 
+        //5-day forecast
+        var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + key;
+        $.ajax({
+          url: queryURL2,
+          method: "GET"
+        })
+          .then(function (response) {
+            console.log(queryURL2);
+            console.log(response);
+
+            // Transfer content to HTML
+            var icon = ("<img src='http://openweathermap.org/img/w/" + response.list[0].weather.icon + ".png' alt='Icon depicting current weather.'>");
+            $(buttonDiv).append("<h1>5-Day Forecast</h1>");
+            $(buttonDiv).append("<h1>" + response.list[0].main.temp + icon + "</h1>");
+
+          });
+      });
+  }
 
   //CLICK EVENTS *************************************************************************************************
   //==============================================================================================================
 
   //Clicking a category button displays the proper subcategory buttons
   $("body").on("click", ".category-buttons", function () {
-      category = $(this).attr("value").toLowerCase();
-      if (category === "lumber") {
-        subCategory = lumberSubCategoryArray;
-      }
-      getSubCategoryButtons(category);
+    category = $(this).attr("value").toLowerCase();
+    if (category === "lumber") {
+      subCategory = lumberSubCategoryArray;
+    }
+    getSubCategoryButtons(category);
   })
   $("body").on("click", ".sub-category-buttons", function () {
-      pickedSubCategory = $(this).attr("value").toLowerCase();
-      if (pickedSubCategory === "board") {
-        dimArray = lumber.board.dimension;
-      }
-      else if (pickedSubCategory === "plywood") {
-        dimArray = lumber.plywood.dimension;
-      }
-      getDimensionButtons();
+    pickedSubCategory = $(this).attr("value").toLowerCase();
+    if (pickedSubCategory === "board") {
+      dimArray = lumber.board.dimension;
+    }
+    else if (pickedSubCategory === "plywood") {
+      dimArray = lumber.plywood.dimension;
+    }
+    getDimensionButtons();
   })
   //Clicking these buttons updates the display with dimensions, then calls the type buttons after three 
   //dimensions are entered
@@ -237,6 +265,7 @@ $(document).ready(function () {
 
   //MAIN PROCESS *************************************************************************************************
   //==============================================================================================================
-  // geoFindMe();
+  displayField.hide();
   getCategoryButton();
+
 });
