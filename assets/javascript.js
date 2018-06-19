@@ -4,12 +4,14 @@ $(document).ready(function () {
   var lumber = {
     board: {
       dimension: ["1", "2", "3", "4", "6", "8", "10", "12", "16", "home", "20", "del"],
-      type: ["Fir", "Pine", "Oak", "Cdr", "Rdwd", "Trtd"]
+      type: ["Fir", "Pine", "Oak", "Cdr", "Rdwd", "Trtd"],
+      quantity: ["1", "5", "10", "100"]
     },
     plywood: {
       dimension: ["1", "2", "3", "4", "5", "8", "home", "&#47", "del"],
-      type: ["Pine", "Oak", "Rdwd", "Birch", "OSB", "MDF"]
-    }
+      type: ["Pine", "Oak", "Rdwd", "Birch", "OSB", "MDF"],
+      quantity: ["1", "5", "10", "50"]
+    },
   };
   var categoryArray = ["Lumber", "Plumbing", "Electrical", "Hardware"];
   var lumberSubCategoryArray = ["Board", "Plywood"];
@@ -89,25 +91,25 @@ $(document).ready(function () {
     }
   }
   //Creates a quantity field with + and - buttons
-  // function getQuantityButtons() {
-  //   buttonDiv.empty();
-  //   buttonDiv.append('<div class="row spacer"></div>');
-  //   buttonDiv.append('<div class="row spacer" id="qty-row"></div>');
+  function getQuantityButtons() {
+    buttonDiv.empty();
+    buttonDiv.append('<div class="row spacer"></div>');
+    buttonDiv.append('<div class="row spacer" id="qty-row"></div>');
 
-  //   var spacerDiv = $("#qty-row");
+    var spacerDiv = $("#qty-row");
 
-  //   spacerDiv.append('<div class="col s6" id="qty-left"></div>');
-  //   var quantityDiv = $("#qty-left");
-  //   quantityDiv.html('<form id="qty-input"><input type="text" placeholder="Qty></form>');
+    spacerDiv.append('<div class="col s6" id="qty-left"></div>');
+    var quantityDiv = $("#qty-left");
+    quantityDiv.html('<form id="qty-input"><input type="text" placeholder="Qty></form>');
 
 
-  //   spacerDiv.append('<div class="col s6" id="qty-right"></div>');
+    spacerDiv.append('<div class="col s6" id="qty-right"></div>');
 
-  //   var containerDiv = $("#qty-right");
+    var containerDiv = $("#qty-right");
 
-  //   containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="plus">+</button>');
-  //   containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="minus">-</button>');
-  // }
+    containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="plus">+</button>');
+    containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="minus">-</button>');
+  }
 
   //Determines geo coordinates of current location
   function geoFindMe() {
@@ -185,6 +187,11 @@ $(document).ready(function () {
       });
   }
 
+  dataRef.ref().orderByChild("dateAdded").on("child_added", function(snapshot) {
+    // Change the HTML to reflect
+    $("#list-div").text(snapshot.val().listItem);
+  })
+
   //CLICK EVENTS *************************************************************************************************
   //==============================================================================================================
 
@@ -239,6 +246,7 @@ $(document).ready(function () {
 
   //Clicking the 'add' button updates the list array, updates Firebase database
   $("body").on("click", "#add-button-id", function (event) {
+    var qty = (qty + $(this).attr("value"));
     event.preventDefault();
     listItem = listItem + qty;
     list.push(listItem);
@@ -247,6 +255,8 @@ $(document).ready(function () {
     });
 
   });
+
+
 
   //Clicking the 'location' button call functions to display map and weather data
   $("#location-btn").on("click", function () {
