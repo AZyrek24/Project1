@@ -9,6 +9,17 @@ container {
   width: 100%;
 }
 
+#top-bar {
+  height: 125px;
+}
+#app-name{
+  font-size: 100px;
+  color: black;
+  margin-left: 5px;
+  margin-top: 22px;
+  font-weight: bolder;
+}
+
 main {
   flex: 1 0 auto;
 }
@@ -48,7 +59,7 @@ nav {
 }
 #display-field {  
   background: black;
-  font-size: 40px;
+  font-size: 48px;
   color: white;
 }
 #data-input {
@@ -60,20 +71,12 @@ nav {
 }
 #list-btn,
 #location-btn {
-  height: 50px;
-  width: 50px;
-  margin: 5px 15px 10px 0px;
+  height: 105px;
+  margin: 10px 15px 10px 0px;
   border-radius: 4px;
 }
 #icon-size{
-  font-size: 38px;
-}
-#app-name{
-  font-size: 36px;
-  color: black;
-  margin-left: 4px;
-  margin-top: 0px;
-  font-weight: bolder;
+  font-size: 60px;
 }
 #category-choice {
   font-size: 65px;
