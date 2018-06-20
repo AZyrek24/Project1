@@ -46,13 +46,13 @@ nav {
   width: 220px;
 }
 .type-buttons {
-  font-size: 160px;
+  font-size: 125px;
   font-weight: bold;
   float: left;
-  margin: 65px 10px 50px 180px;
+  margin: 30px 10px 45px 35px;
   color: white;
   border-radius: 10px;
-  width: 440px;
+  width: 370px;
 }
 .spacer {
   height: 260px;
@@ -104,9 +104,20 @@ nav {
 
 }
 #qty-input {
-  width: 400px;
-  height: 400px;
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  color: white;
+  font-size: 80px;
 }
 
-
+#qty-buttons {
+  font-size: 160px;
+  font-weight: bold;
+  float: left;
+  margin: 40px 10px 50px 40px;
+  color: white;
+  border-radius: 40px;
+  width: 220px;
+}
 

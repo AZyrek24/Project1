@@ -4,12 +4,13 @@ $(document).ready(function () {
   var lumber = {
     board: {
       dimension: ["1", "2", "3", "4", "6", "8", "10", "12", "16", "home", "20", "del"],
-      type: ["Fir", "Pine", "Oak", "Cdr", "Rdwd", "Trtd"]
+      type: ["Fir", "Pine", "Oak", "Cedar", "Rdwd", "Trtd"]
     },
     plywood: {
       dimension: ["1", "2", "3", "4", "5", "8", "home", "&#47", "del"],
       type: ["Pine", "Oak", "Rdwd", "Birch", "OSB", "MDF"]
-    }
+    },
+    quantity: ["1", "5", "10", "100"]
   };
   var categoryArray = ["Lumber", "Plumbing", "Electrical", "Hardware"];
   var lumberSubCategoryArray = ["Board", "Plywood"];
@@ -20,6 +21,7 @@ $(document).ready(function () {
   var listItem = "";
   var list = [];
   var qty = 0;
+  var qtyArray
   var latitude = 0;
   var longitude = 0;
 
@@ -89,25 +91,15 @@ $(document).ready(function () {
     }
   }
   //Creates a quantity field with + and - buttons
-  // function getQuantityButtons() {
-  //   buttonDiv.empty();
-  //   buttonDiv.append('<div class="row spacer"></div>');
-  //   buttonDiv.append('<div class="row spacer" id="qty-row"></div>');
-
-  //   var spacerDiv = $("#qty-row");
-
-  //   spacerDiv.append('<div class="col s6" id="qty-left"></div>');
-  //   var quantityDiv = $("#qty-left");
-  //   quantityDiv.html('<form id="qty-input"><input type="text" placeholder="Qty></form>');
-
-
-  //   spacerDiv.append('<div class="col s6" id="qty-right"></div>');
-
-  //   var containerDiv = $("#qty-right");
-
-  //   containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="plus">+</button>');
-  //   containerDiv.append('<button type="button" class="white-text text-accent-4 green type-buttons" id="minus">-</button>');
-  // }
+  function getQuantityButtons() {
+    buttonDiv.empty();
+    buttonDiv.append('<h1 id="category-choice">How many? <span id="qty-input">' + qty + '</span></h1>');
+    var qtyArray = lumber.quantity;
+    for (var i = 0; i < qtyArray.length; i++) {
+      buttonDiv.append('<button type="button" class="white-text text-accent-4 black qty-buttons" value=' + qtyArray[i] + '>' + qtyArray[i] + '</button>');
+    }
+    buttonDiv.append('<button type="button" class="white-text text-accent-4 black category-buttons">Submit</button>') 
+  }
 
   //Determines geo coordinates of current location
   function geoFindMe() {
@@ -257,9 +249,9 @@ $(document).ready(function () {
 
 
   //Clicking the 'list' button retreives firebase.database list and displays as a list
-  // $("body").on("click", "#list-btn", function (event) {
+  $("body").on("click", "#list-btn", function (event) {
 
-  // })
+  })
 
 
 
