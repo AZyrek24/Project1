@@ -11,7 +11,7 @@ $(document).ready(function () {
       dimension: ["1/8", "1/4", "3/8", "1/2", "5/8", "3/4", "del"],
       type: ["Pine", "Oak", "Rdwd", "Brch", "OSB", "MDF"],
     },
-    quantity: ["1", "5", "10", "100"]
+    quantity: ["1", "5", "10", "-1", "-5", "-10"]
   };
   var categoryArray = ["Lumber", "Plumbing", "Electrical", "Hardware"];
   var lumberSubCategoryArray = ["Board", "Plywood"];
@@ -21,6 +21,7 @@ $(document).ready(function () {
   var counter = 0;
   var listItem = "";
   var list = [];
+  var listCounter = 0;
   var qty = 1;
   var qtyArray;
   var latitude = 0;
@@ -45,7 +46,8 @@ $(document).ready(function () {
   //Start Function grabs Firebase list and stores in an array
   function start() {
     database.ref().on("value", function (snapshot) {
-    list = snapshot.val().list;
+      list = snapshot.val().list;
+      console.log(list);
     })
     getCategoryButton();
   }
@@ -106,12 +108,28 @@ $(document).ready(function () {
   //Creates a quantity field with + and - buttons
   function getQuantityButtons() {
     buttonDiv.empty();
-    buttonDiv.append('<h1 id="category-choice">How many? <input type="text" name="qty" id="qty" maxlength="6"/>' + qty + '</span></h1>');
+    buttonDiv.append('<h1 id="category-choice">Quantity <input type="text" name="qty" id="qty-display" maxlength="8" value="' + qty + '"></input></h1>');
     qtyArray = lumber.quantity;
     for (var i = 0; i < qtyArray.length; i++) {
       buttonDiv.append('<button type="button" class="white-text text-accent-4 black qty-buttons" value=' + qtyArray[i] + '>' + qtyArray[i] + '</button>');
     }
     buttonDiv.append('<button type="button" class="white-text text-accent-4 green" id="add-button-id">Add</button>')
+  }
+
+  //Gets list from firebase and displays it
+  function getList() {
+    listCounter = 0;
+    event.preventDefault();
+    displayField.hide();
+    buttonDiv.empty();
+    database.ref().on("value", function (snapshot) {
+      console.log(snapshot.val().list.length);
+      
+      for (var i = 0; i < snapshot.val().list.length; i++) {
+        buttonDiv.append('<h1 class="list-display"><b>' + snapshot.val().list[i] + '<button type="button" class="waves-effect red darken-4" id="delete-btn" value="' + listCounter + '"><i class="material-icons" id="icon-size">clear</i></h1>');
+        listCounter++
+      }
+    })
   }
 
   //Determines geo coordinates of current location
@@ -169,7 +187,7 @@ $(document).ready(function () {
 
         // Transfer content to HTML
         var icon = ("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png' alt='Icon depicting current weather.'>");
-        $(buttonDiv).append("<h1 class='weather'>Current Temp:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + response.main.temp.toFixed(0) + "&#8457" + icon + response.weather[0].main + "</h1>");
+        $(buttonDiv).append("<h1 class='weather'>Current Temp:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + response.main.temp.toFixed(0) + "&deg" + icon + response.weather[0].main + "</h1>");
 
         //5-day forecast
         var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + key;
@@ -184,7 +202,7 @@ $(document).ready(function () {
             // Transfer content to HTML
 
             var icon = ("<img src='http://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png' alt='Icon depicting current weather.'>");
-            $(buttonDiv).append("<h1 class='weather'>Tomorrow's High:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + response.list[9].main.temp.toFixed(0) + "&#8457" + icon + response.list[9].weather[0].main + "</h1>");
+            $(buttonDiv).append("<h1 class='weather'>Tomorrow's High:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + response.list[9].main.temp.toFixed(0) + "&deg" + icon + response.list[9].weather[0].main + "</h1>");
           });
       });
   }
@@ -243,13 +261,10 @@ $(document).ready(function () {
 
   //Clicking quantity buttons updated
   $("body").on("click", ".qty-buttons", function () {
-
-    var qtyButtons = $("#qty-display");
     var n = parseInt($(this).attr("value"));
     qty = (qty + n);
-    qtyButtons.html(qty);
- console.log(qty);
- 
+    if (qty < 1) qty = 1;
+    getQuantityButtons();
   });
 
   //Clicking the 'add' button updates the list array, updates Firebase database
@@ -274,10 +289,14 @@ $(document).ready(function () {
     getCategoryButton();
   })
   //Clicking the 'del' button deletes the last entry, displays correct button screen
-  // $("body").on("click", ".del", function () {
-  //   $("#data-input p:last").remove();
-  // })
-
+  $("body").on("click", "#delete-btn", function () {
+    var val = $(this).val("value");
+    console.log(list);
+    list = list.splice(val, 1);
+    database.ref().set({
+      list: list
+    });
+  })
 
   //Clicking the 'location' button call functions to display map and weather data
   $("#location-btn").on("click", function () {
@@ -288,18 +307,11 @@ $(document).ready(function () {
 
 
   //Clicking the 'list' button retreives firebase.database list and displays as a list
-  $("body").on("click", "#list-btn", function (event) {
-    event.preventDefault();
-    displayField.hide();
-    buttonDiv.empty();
-    database.ref().on("value", function (snapshot) {
-      console.log(snapshot.val().list.length);
-      for (var i = 0; i < snapshot.val().list.length; i++) {
-        buttonDiv.append('<h1 class="list-display"><b>' + snapshot.val().list[i] + '</b><button type="button" class="waves-effect red darken-4 btn-large" id="list-del"></h1>');
-      }
-    }, function (errorObject) {
+  $("body").on("click", "#list-btn", function () {
+    getList()
+    , function (errorObject) {
       console.log("Errors handled: " + errorObject.code);
-    });
+    };
   })
 
 

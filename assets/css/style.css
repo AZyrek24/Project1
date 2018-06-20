@@ -151,6 +151,21 @@ h1.weather {
   color: white;
   font-size: 80px;
 }
+#qty-display {
+  width: 420px;
+  height: 100px;
+  background-color: black;
+  color: white;
+  font-size: 80px;
+}
+#delete-btn {
+  height: 80px;
+  margin: 5px 5px 10px 0px;
+  border-radius: 4px;
+  background-color: red;
+  float: right;
+}
+
 .qty-buttons {
   font-size: 120px;
   font-weight: bold;
