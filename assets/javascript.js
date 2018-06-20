@@ -20,7 +20,7 @@ $(document).ready(function () {
   var counter = 0;
   var listItem = "";
   var list = [];
-  var qty = 0;
+  var qty = 1;
   var qtyArray
   var latitude = 0;
   var longitude = 0;
@@ -98,7 +98,7 @@ $(document).ready(function () {
     for (var i = 0; i < qtyArray.length; i++) {
       buttonDiv.append('<button type="button" class="white-text text-accent-4 black qty-buttons" value=' + qtyArray[i] + '>' + qtyArray[i] + '</button>');
     }
-    buttonDiv.append('<button type="button" class="white-text text-accent-4 black category-buttons">Submit</button>') 
+    buttonDiv.append('<button type="button" class="white-text text-accent-4 green category-buttons">Add</button>') 
   }
 
   //Determines geo coordinates of current location
