@@ -94,7 +94,7 @@ $(document).ready(function () {
   function getQuantityButtons() {
     buttonDiv.empty();
     buttonDiv.append('<h1 id="category-choice">How many? <span id="qty-input">' + qty + '</span></h1>');
-    var qtyArray = lumber.quantity;
+    qtyArray = lumber.quantity;
     for (var i = 0; i < qtyArray.length; i++) {
       buttonDiv.append('<button type="button" class="white-text text-accent-4 black qty-buttons" value=' + qtyArray[i] + '>' + qtyArray[i] + '</button>');
     }
