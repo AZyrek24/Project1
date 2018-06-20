@@ -3,8 +3,8 @@ $(document).ready(function () {
   //===============================================================================================================
   var lumber = {
     board: {
-      dimension: ["1", "2", "3", "4", "6", "8", "10", "12", "14", "16", "20", "del"],
-      type: ["Fir", "Pine", "Oak&nbsp", "Cdr", "Rdwd", "Trtd", "del"],
+      dimension: ["1", "2", "3", "4", "6", "8", "10", "12", "14", "16", "20", "24"],
+      type: ["Fir", "Pine", "Oak", "Cdr", "Rdwd", "Trtd"],
       quantity: ["1", "5", "10", "100"]
     },
     plywood: {
@@ -13,8 +13,8 @@ $(document).ready(function () {
     },
     quantity: ["1", "5", "10", "-1", "-5", "-10"]
   };
-  var categoryArray = ["Lumber", "Plumbing", "Electrical", "Hardware"];
-  var lumberSubCategoryArray = ["Board", "Plywood"];
+  var categoryArray = ["Lumber"];
+  var lumberSubCategoryArray = ["Board"];
   var category = "";
   var subCategory;
   var dimArray;
@@ -58,7 +58,8 @@ $(document).ready(function () {
   //Upon loading page, a button creates the lumber category for building a list
   function getCategoryButton() {
     displayField.hide();
-    buttonDiv.append('<h1 id="category-choice">Pick a category...</h1>');
+    buttonDiv.empty();
+    buttonDiv.append('<h1 id="category-choice">What do you need?</h1>');
     for (var i = 0; i < categoryArray.length; i++) {
       buttonDiv.append('<button type="button" class="white-text text-accent-4 black category-buttons" value=' + categoryArray[i] + '>' + categoryArray[i] + '</button>');
     }
@@ -126,9 +127,9 @@ $(document).ready(function () {
       console.log(snapshot.val().list.length);
       
       for (var i = 0; i < snapshot.val().list.length; i++) {
-        buttonDiv.append('<h1 class="list-display"><b>' + snapshot.val().list[i] + '<button type="button" class="waves-effect red darken-4" id="delete-btn" value="' + listCounter + '"><i class="material-icons" id="icon-size">clear</i></h1>');
-        listCounter++
+        buttonDiv.append('<h1 class="list-display"><b>' + snapshot.val().list[i] + '</h1>');
       }
+      buttonDiv.append('<button type="button" class="white-text text-accent-4 green" id="clear-list-id">Clear</button>');
     })
   }
 
@@ -312,6 +313,14 @@ $(document).ready(function () {
     , function (errorObject) {
       console.log("Errors handled: " + errorObject.code);
     };
+  })
+
+  $("body").on("click", "#clear-list-id", function () {
+    list = [];
+    database.ref().set({
+      list: list
+    });
+    start();
   })
 
 

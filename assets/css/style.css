@@ -136,7 +136,8 @@ h1.weather {
   border-radius: 40px;
   width: 220px;
 }
-#add-button-id {
+#add-button-id,
+#clear-list-id {
   font-size: 160px;
   font-weight: bold;
   margin: 65px 10px 50px 65px;
@@ -157,6 +158,7 @@ h1.weather {
   background-color: black;
   color: white;
   font-size: 80px;
+  text-align: center;
 }
 #delete-btn {
   height: 80px;
