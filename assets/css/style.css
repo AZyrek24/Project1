@@ -9,11 +9,28 @@ container {
   width: 100%;
 }
 
+#top-bar {
+  height: 125px;
+}
+#app-name{
+  font-size: 100px;
+  color: black;
+  margin-left: 5px;
+  margin-top: 22px;
+  font-weight: bolder;
+}
+
 main {
   flex: 1 0 auto;
 }
 nav {
   height: 80px;
+}
+img {
+  height: 80px;
+}
+#buttons-div {
+  margin-top: 60px;
 }
 .category-buttons,
 .sub-category-buttons {
@@ -35,45 +52,46 @@ nav {
   width: 220px;
 }
 .type-buttons {
-  font-size: 160px;
+  font-size: 125px;
   font-weight: bold;
   float: left;
-  margin: 65px 10px 50px 180px;
+  margin: 30px 10px 45px 35px;
   color: white;
   border-radius: 10px;
-  width: 440px;
+  width: 370px;
 }
-.spacer {
-  height: 260px;
+h1.weather {
+  background: lightblue;
+  font-size: 80px;
+  margin: 60px 0 0 0;
+  padding: 20px;
+  border: 4px solid rgb(254,213,49);
+}
+#spacer {
+  height: 60px;
 }
 #display-field {  
   background: black;
-  font-size: 40px;
+  font-size: 48px;
   color: white;
 }
 #data-input {
   padding-top: 20px;
   padding-bottom: 20px;
-  height: 80px;
+  font-size: 90px;
+  height: 160px;
   background: black;
   color: white;
 }
 #list-btn,
-#location-btn {
-  height: 50px;
-  width: 50px;
-  margin: 5px 15px 10px 0px;
+#location-btn,
+#home {
+  height: 105px;
+  margin: 10px 15px 10px 0px;
   border-radius: 4px;
 }
 #icon-size{
-  font-size: 38px;
-}
-#app-name{
-  font-size: 36px;
-  color: black;
-  margin-left: 4px;
-  margin-top: 0px;
-  font-weight: bolder;
+  font-size: 60px;
 }
 #category-choice {
   font-size: 65px;
@@ -82,10 +100,10 @@ nav {
 }
 
 #bottom-bar {
-  height: 60px;
+  height: 120px;
 }
 #map {
-  margin-top: 80px;
+  margin-top: 80px 0 100px 0;
   border: 4px solid rgb(254,213,49);
 }
 #qty-row {
@@ -101,9 +119,47 @@ nav {
 
 }
 #qty-input {
-  width: 400px;
-  height: 400px;
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  color: white;
+  font-size: 80px;
 }
+
+#qty-buttons {
+  font-size: 160px;
+  font-weight: bold;
+  float: left;
+  margin: 40px 10px 50px 40px;
+  color: white;
+  border-radius: 40px;
+  width: 220px;
+}
+#add-button-id {
+  font-size: 160px;
+  font-weight: bold;
+  margin: 65px 10px 50px 65px;
+  color: white;
+  border-radius: 40px;
+  width: 720px;
+}
+#qty {
+  width: 420px;
+  height: 100px;
+  background-color: black;
+  color: white;
+  font-size: 80px;
+}
+.qty-buttons {
+  font-size: 120px;
+  font-weight: bold;
+  float: left;
+  margin: 40px 10px 50px 40px;
+  color: white;
+  border-radius: 40px;
+  width: 220px;
+}
+
 
 
 
