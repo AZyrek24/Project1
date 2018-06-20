@@ -14,7 +14,7 @@ container {
 }
 
 #app-name{
-  font-size: 100px;
+  font-size: 97px;
   color: black;
   margin-left: 5px;
   margin-top: 22px;
@@ -104,8 +104,8 @@ nav {
   width: 220px;
 
 }
-#qty-input {
-  width: 100px;
+#qty-display {
+  width: 420px;
   height: 100px;
   background-color: black;
   color: white;
@@ -113,7 +113,7 @@ nav {
 }
 
 .qty-buttons {
-  font-size: 160px;
+  font-size: 120px;
   font-weight: bold;
   float: left;
   margin: 40px 10px 50px 40px;
@@ -122,3 +122,11 @@ nav {
   width: 220px;
 }
 
+#add-button-id {
+  font-size: 160px;
+  font-weight: bold;
+  margin: 65px 10px 50px 65px;
+  color: white;
+  border-radius: 40px;
+  width: 720px;
+}

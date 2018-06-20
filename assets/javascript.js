@@ -10,7 +10,7 @@ $(document).ready(function () {
       dimension: ["1", "2", "3", "4", "5", "8", "home", "&#47", "del"],
       type: ["Pine", "Oak", "Rdwd", "Birch", "OSB", "MDF"]
     },
-    quantity: ["1", "5", "10", "100"]
+    quantity: ["1", "5", "10", "-1", "-5", "-10"]
   };
   var categoryArray = ["Lumber", "Plumbing", "Electrical", "Hardware"];
   var lumberSubCategoryArray = ["Board", "Plywood"];
@@ -24,6 +24,7 @@ $(document).ready(function () {
   var qtyArray
   var latitude = 0;
   var longitude = 0;
+  var addInput = ""
 
   // Initialize Firebase ******************************************************************************************
   //===============================================================================================================
@@ -93,12 +94,12 @@ $(document).ready(function () {
   //Creates a quantity field with + and - buttons
   function getQuantityButtons() {
     buttonDiv.empty();
-    buttonDiv.append('<h1 id="category-choice">How many? <span id="qty-input">' + qty + '</span></h1>');
+    buttonDiv.append('<h1 id="category-choice">Quantity <input type="text" name="qty" id="qty-display" maxlength="8"/></input></h1>');
     qtyArray = lumber.quantity;
     for (var i = 0; i < qtyArray.length; i++) {
       buttonDiv.append('<button type="button" class="white-text text-accent-4 black qty-buttons" value=' + qtyArray[i] + '>' + qtyArray[i] + '</button>');
     }
-    buttonDiv.append('<button type="button" class="white-text text-accent-4 green category-buttons">Add</button>') 
+    buttonDiv.append('<button type="button" class="white-text text-accent-4 green" id="add-button-id">Add</button>')
   }
 
   //Determines geo coordinates of current location
@@ -207,7 +208,7 @@ $(document).ready(function () {
       listItem = listItem + buttonValue + " x ";
       counter++;
     }
-    else if (counter < 4) {
+    else if (counter < 3) {
       var buttonValue = $(this).attr("value");
       dataInput.append(buttonValue + " ");
       listItem = listItem + buttonValue + " ";
@@ -217,9 +218,10 @@ $(document).ready(function () {
     console.log(listItem);
   });
 
+
   //Clicking a 'type' button updates the display with lumber type, then calls the quantity button 
   $("body").on("click", ".type-buttons", function () {
-    if (counter < 5) {
+    if (counter < 4) {
       var buttonValue = $(this).attr("value");
       dataInput.append(buttonValue + " = ");
       listItem = listItem + buttonValue + " = ";
@@ -227,6 +229,19 @@ $(document).ready(function () {
       getQuantityButtons();
     }
     console.log(listItem);
+  });
+
+
+  $("body").on("click", ".qty-buttons", function () {
+
+    var qtyButtons = $("#qty-display");
+    var n = parseInt($(this).attr("value"));
+    qty = (qty + n);
+    qtyButtons.append(qty);
+console.log(qty);
+
+    //On click add n
+
   });
 
   //Clicking the 'add' button updates the list array, updates Firebase database
