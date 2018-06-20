@@ -130,3 +130,10 @@ nav {
   border-radius: 40px;
   width: 720px;
 }
+
+#delete-btn {
+  height: 80px;
+  margin: 10px 10px 10px 0px;
+  border-radius: 4px;
+  background-color: red;
+}

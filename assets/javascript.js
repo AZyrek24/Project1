@@ -19,7 +19,6 @@ $(document).ready(function () {
   var dimArray;
   var counter = 0;
   var listItem = "";
-  var list = [];
   var qty = 1;
   var qtyArray
   var latitude = 0;
@@ -94,7 +93,7 @@ $(document).ready(function () {
   //Creates a quantity field with + and - buttons
   function getQuantityButtons() {
     buttonDiv.empty();
-    buttonDiv.append('<h1 id="category-choice">Quantity <input type="text" name="qty" id="qty-display" maxlength="8"/></input></h1>');
+    buttonDiv.append('<h1 id="category-choice">Quantity <input type="text" name="qty" id="qty-display" maxlength="8" value="' + qty + '"></input></h1>');
     qtyArray = lumber.quantity;
     for (var i = 0; i < qtyArray.length; i++) {
       buttonDiv.append('<button type="button" class="white-text text-accent-4 black qty-buttons" value=' + qtyArray[i] + '>' + qtyArray[i] + '</button>');
@@ -233,26 +232,23 @@ $(document).ready(function () {
 
 
   $("body").on("click", ".qty-buttons", function () {
-
-    var qtyButtons = $("#qty-display");
     var n = parseInt($(this).attr("value"));
     qty = (qty + n);
-    qtyButtons.append(qty);
-console.log(qty);
-
-    //On click add n
+    if (qty < 1) qty = 1;
+    getQuantityButtons();
 
   });
 
   //Clicking the 'add' button updates the list array, updates Firebase database
   $("body").on("click", "#add-button-id", function (event) {
+    if (qty > 0) {
     event.preventDefault();
     listItem = listItem + qty;
     list.push(listItem);
     database.ref().set({
       list: list
     });
-
+  }
   });
 
   //Clicking the 'location' button call functions to display map and weather data
