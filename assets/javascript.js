@@ -21,7 +21,6 @@ $(document).ready(function () {
   var counter = 0;
   var listItem = "";
   var list = [];
-  var listCounter = 0;
   var qty = 1;
   var qtyArray;
   var latitude = 0;
@@ -76,7 +75,7 @@ $(document).ready(function () {
   //Stores recurring JQuery to variable
   var displayField = $("#display-field");
 
-  //Creates buttons to enter dimensions of lumber, a home button, and a back button
+  //Creates buttons to enter dimensions of lumber
   function getDimensionButtons() {
     displayField.show();
     dataInput.empty();
@@ -188,7 +187,7 @@ $(document).ready(function () {
 
         // Transfer content to HTML
         var icon = ("<img src='http://openweathermap.org/img/w/" + response.weather[0].icon + ".png' alt='Icon depicting current weather.'>");
-        $(buttonDiv).append("<h1 class='weather'>Current Temp:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + response.main.temp.toFixed(0) + "&deg" + icon + response.weather[0].main + "</h1>");
+        $(buttonDiv).append("<h1 class='weather'>Current Temp:&nbsp&nbsp&nbsp&nbsp&nbsp" + response.main.temp.toFixed(0) + "&deg" + icon + response.weather[0].main + "</h1>");
 
         //5-day forecast
         var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&units=imperial&appid=" + key;
@@ -203,10 +202,13 @@ $(document).ready(function () {
             // Transfer content to HTML
 
             var icon = ("<img src='http://openweathermap.org/img/w/" + response.list[0].weather[0].icon + ".png' alt='Icon depicting current weather.'>");
-            $(buttonDiv).append("<h1 class='weather'>Tomorrow's High:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + response.list[9].main.temp.toFixed(0) + "&deg" + icon + response.list[9].weather[0].main + "</h1>");
+            $(buttonDiv).append("<h1 class='weather'>Tomorrow's High:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + response.list[5].main.temp.toFixed(0) + "&deg" + icon + response.list[9].weather[0].main + "</h1>");
           });
       });
   }
+
+
+
 
   //CLICK EVENTS *************************************************************************************************
   //==============================================================================================================
@@ -290,14 +292,14 @@ $(document).ready(function () {
     getCategoryButton();
   })
   //Clicking the 'del' button deletes the last entry, displays correct button screen
-  $("body").on("click", "#delete-btn", function () {
-    var val = $(this).val("value");
-    console.log(list);
-    list = list.splice(val, 1);
-    database.ref().set({
-      list: list
-    });
-  })
+  // $("body").on("click", "#delete-btn", function () {
+  //   var val = $(this).val("value");
+  //   console.log(list);
+  //   list = list.splice(val, 1);
+  //   database.ref().set({
+  //     list: list
+  //   });
+  // })
 
   //Clicking the 'location' button call functions to display map and weather data
   $("#location-btn").on("click", function () {
